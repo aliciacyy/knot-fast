@@ -1,5 +1,5 @@
 import PostCard from '../components/PostCard';
-import { getPosts, getAllPostTags } from '../lib/queries';
+import { getWorks, getAllWorkTags } from '../lib/queries';
 
 export const revalidate = 60;
 
@@ -10,13 +10,13 @@ type Props = {
 export default async function BlogPage({ searchParams }: Props) {
   const { tag } = await searchParams; // 👈 FIX HERE
 
-  const [posts, tags] = await Promise.all([getPosts(), getAllPostTags()]);
+  const [posts, tags] = await Promise.all([getWorks(), getAllWorkTags()]);
 
   return (
-    <main className="min-h-dvh bg-[#faf7f2]">
+    <main className="min-h-dvh">
       <div className="mx-auto max-w-6xl px-4 py-12">
         <h1 className="text-3xl font-semibold tracking-tight text-black/90">
-          Blog
+          Recent works
         </h1>
 
         {/* Tag filter */}

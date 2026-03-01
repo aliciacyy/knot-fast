@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import PortableText from '@/app/components/PortableText';
 import { urlForImage } from '@/app/lib/image';
-import { getPostBySlug, getPostSlugs } from '@/app/lib/queries';
+import { getWorkBySlug, getPostSlugs } from '@/app/lib/queries';
 
 export const revalidate = 60;
 
@@ -27,19 +27,16 @@ export default async function BlogPostPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const post = await getPostBySlug(slug);
+  const post = await getWorkBySlug(slug);
 
   if (!post) notFound();
 
   return (
-    <main className="min-h-dvh bg-[#faf7f2]">
+    <main className="min-h-dvh">
       <article className="mx-auto max-w-3xl px-4 py-12">
         <header className="space-y-4">
-          <Link
-            href="/blog"
-            className="text-sm text-black/60 hover:text-black/80"
-          >
-            ← Back to blog
+          <Link href="/" className="text-sm text-black/60 hover:text-black/80">
+            ← Back to home
           </Link>
 
           <div className="text-xs text-black/50">
