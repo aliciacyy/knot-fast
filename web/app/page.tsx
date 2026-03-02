@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { getFeaturedWork, getRecentWorks } from './lib/queries';
+import { getRecentProducts, getRecentProjects } from './lib/queries';
 import { urlForImage } from './lib/image';
 import MonthlyTracker from './components/MonthlyTracker';
 import Footer from './components/Footer';
@@ -18,9 +18,9 @@ function formatDate(iso: string) {
 }
 
 export default async function HomePage() {
-  const [featured, recent] = await Promise.all([
-    getFeaturedWork(),
-    getRecentWorks(6),
+  const [products, projects] = await Promise.all([
+    getRecentProducts(),
+    getRecentProjects(6),
   ]);
 
   return (
@@ -96,132 +96,125 @@ export default async function HomePage() {
       </section> */}
 
       {/* UP FOR ORDERS */}
-      <section className="mx-auto max-w-5xl px-4 py-14">
-        <div className="flex items-end justify-between gap-4">
-          <div>
-            <h3 className="font-serif text-2xl tracking-tight">Up for sale</h3>
-            <p className="mt-2 text-sm text-black/55 sm:text-base">
-              Pieces for sale or up for pre-orders (limited quanities).
-            </p>
-          </div>
-          <Link
-            href="/crochets"
-            className="text-sm font-medium text-black/70 hover:text-black/90"
-          >
-            View all →
-          </Link>
-        </div>
-
-        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {recent.map((w) => (
-            <Link
-              key={w._id}
-              href={`/crochets/${w.slug.current}`}
-              className="group overflow-hidden rounded-3xl border border-black/10 bg-white/60 backdrop-blur hover:bg-white/70"
-            >
-              <div className="relative aspect-[4/3] bg-black/5">
-                {w.coverImage ? (
-                  <Image
-                    src={urlForImage(w.coverImage)
-                      .width(1200)
-                      .height(900)
-                      .quality(80)
-                      .url()}
-                    alt={w.title}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  />
-                ) : null}
-              </div>
-
-              <div className="p-4">
-                <div className="text-xs text-black/45">
-                  {formatDate(w.publishedAt)}
-                </div>
-                <div className="mt-1 font-medium text-black/85">{w.title}</div>
-                {w.excerpt ? (
-                  <p className="mt-2 line-clamp-2 text-sm leading-6 text-black/55">
-                    {w.excerpt}
-                  </p>
-                ) : null}
-              </div>
-            </Link>
-          ))}
-
-          {!recent.length ? (
-            <div className="rounded-3xl border border-black/10 bg-white/60 p-6 text-black/60">
-              No works yet. Add your first{' '}
-              <span className="font-medium">Work</span> in Sanity Studio and
-              publish it ✨
+      <section className="mx-auto max-w-5xl px-4 pt-8">
+        <div className="card-float animate-fadeUp rounded-3xl border border-black/10 bg-white/60 p-5 backdrop-blur sm:p-6">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
+            <div className="min-w-0">
+              <h3 className="font-serif text-3xl tracking-tight">Shop</h3>
+              <p className="mt-2 text-sm text-black/55 sm:text-base">
+                Pieces for sale or up for pre-orders.
+              </p>
             </div>
-          ) : null}
+
+            <Link
+              href="/crochets"
+              className="inline-flex w-fit items-center gap-1 rounded-full border border-black/10 bg-white/60 px-3 py-1.5 text-sm font-medium text-black/70 backdrop-blur hover:bg-white/80"
+            >
+              View all <span aria-hidden="true">→</span>
+            </Link>
+          </div>
+
+          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {products.map((w) => (
+              <Link
+                key={w._id}
+                href={`/products/${w.slug.current}`}
+                className="card-float group overflow-hidden rounded-3xl border border-black/10 bg-white/55 shadow-sm backdrop-blur hover:bg-white/70 hover:shadow-md"
+              >
+                <div className="relative aspect-[4/3] bg-black/5">
+                  {w.images ? (
+                    <Image
+                      src={urlForImage(w.images[0])
+                        .width(1200)
+                        .height(900)
+                        .quality(80)
+                        .url()}
+                      alt={w.title}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+                  ) : null}
+                </div>
+
+                <div className="p-4">
+                  <div className="mt-1 font-medium text-black/85">
+                    {w.title}
+                  </div>
+                  {w.variants ? (
+                    <p className="mt-2 line-clamp-2 text-sm leading-6 text-black/55">
+                      Prices from {w.variants[0].price}
+                    </p>
+                  ) : (
+                    <p className="mt-2 line-clamp-2 text-sm leading-6 text-black/55">
+                      No price yet!
+                    </p>
+                  )}
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* RECENT */}
-      <section className="mx-auto max-w-5xl px-4 py-14">
-        <div className="flex items-end justify-between gap-4">
-          <div>
-            <h3 className="font-serif text-2xl tracking-tight">
-              Recent pieces
-            </h3>
-            <p className="mt-2 text-sm text-black/55 sm:text-base">
-              The latest makes, ready to browse.
-            </p>
-          </div>
-          <Link
-            href="/crochets"
-            className="text-sm font-medium text-black/70 hover:text-black/90"
-          >
-            View all →
-          </Link>
-        </div>
-
-        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {recent.map((w) => (
-            <Link
-              key={w._id}
-              href={`/crochets/${w.slug.current}`}
-              className="group overflow-hidden rounded-3xl border border-black/10 bg-white/60 backdrop-blur hover:bg-white/70"
-            >
-              <div className="relative aspect-[4/3] bg-black/5">
-                {w.coverImage ? (
-                  <Image
-                    src={urlForImage(w.coverImage)
-                      .width(1200)
-                      .height(900)
-                      .quality(80)
-                      .url()}
-                    alt={w.title}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  />
-                ) : null}
-              </div>
-
-              <div className="p-4">
-                <div className="text-xs text-black/45">
-                  {formatDate(w.publishedAt)}
-                </div>
-                <div className="mt-1 font-medium text-black/85">{w.title}</div>
-                {w.excerpt ? (
-                  <p className="mt-2 line-clamp-2 text-sm leading-6 text-black/55">
-                    {w.excerpt}
-                  </p>
-                ) : null}
-              </div>
-            </Link>
-          ))}
-
-          {!recent.length ? (
-            <div className="rounded-3xl border border-black/10 bg-white/60 p-6 text-black/60">
-              No works yet. Add your first{' '}
-              <span className="font-medium">Work</span> in Sanity Studio and
-              publish it ✨
+      <section className="mx-auto max-w-5xl px-4 py-8">
+        <div className="card-float animate-fadeUp rounded-3xl border border-black/10 bg-white/60 p-5 backdrop-blur sm:p-6">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
+            <div className="min-w-0">
+              <h3 className="font-serif text-3xl tracking-tight">Blog</h3>
+              <p className="mt-2 text-sm text-black/55 sm:text-base">
+                Documenting my crochet journey, one stitch at a time.
+              </p>
             </div>
-          ) : null}
+
+            <Link
+              href="/crochets"
+              className="inline-flex w-fit items-center gap-1 rounded-full border border-black/10 bg-white/60 px-3 py-1.5 text-sm font-medium text-black/70 backdrop-blur hover:bg-white/80"
+            >
+              View all <span aria-hidden="true">→</span>
+            </Link>
+          </div>
+
+          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {projects.map((w) => (
+              <Link
+                key={w._id}
+                href={`/crochets/${w.slug.current}`}
+                className="card-float group overflow-hidden rounded-3xl border border-black/10 bg-white/55 shadow-sm backdrop-blur hover:bg-white/70 hover:shadow-md"
+              >
+                <div className="relative aspect-[4/3] bg-black/5">
+                  {w.coverImage ? (
+                    <Image
+                      src={urlForImage(w.coverImage)
+                        .width(1200)
+                        .height(900)
+                        .quality(80)
+                        .url()}
+                      alt={w.title}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+                  ) : null}
+                </div>
+
+                <div className="p-4">
+                  <div className="text-xs text-black/45">
+                    {formatDate(w.publishedAt)}
+                  </div>
+                  <div className="mt-1 font-medium text-black/85">
+                    {w.title}
+                  </div>
+                  {w.excerpt ? (
+                    <p className="mt-2 line-clamp-2 text-sm leading-6 text-black/55">
+                      {w.excerpt}
+                    </p>
+                  ) : null}
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 

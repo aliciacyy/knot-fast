@@ -1,13 +1,17 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
   --bg: #faf7f2;
-  --ink: rgba(0,0,0,0.88);
-  --muted: rgba(0,0,0,0.58);
+  --ink: rgba(0, 0, 0, 0.88);
+  --muted: rgba(0, 0, 0, 0.58);
 }
 
-.font-sans { font-family: var(--font-sans), ui-sans-serif, system-ui; }
-.font-serif { font-family: var(--font-serif), ui-serif, Georgia, serif; }
+.font-sans {
+  font-family: var(--font-sans), ui-sans-serif, system-ui;
+}
+.font-serif {
+  font-family: var(--font-serif), ui-serif, Georgia, serif;
+}
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -18,8 +22,14 @@
 
 @media (prefers-reduced-motion: no-preference) {
   @keyframes cardIn {
-    0% { opacity: 0; transform: translateY(10px); }
-    100% { opacity: 1; transform: translateY(0); }
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   .animate-cardIn {
@@ -29,7 +39,10 @@
 
 /* Card “float” interaction (works regardless of reduced motion) */
 .card-float {
-  transition: transform 240ms ease, box-shadow 240ms ease, background-color 240ms ease;
+  transition:
+    transform 240ms ease,
+    box-shadow 240ms ease,
+    background-color 240ms ease;
   will-change: transform;
 }
 .card-float:hover {
@@ -41,8 +54,13 @@
 
 @media (prefers-reduced-motion: no-preference) {
   @keyframes idleFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-2px); }
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-2px);
+    }
   }
   .idle-float {
     animation: idleFloat 4.5s ease-in-out infinite;
@@ -51,8 +69,14 @@
 
 @media (prefers-reduced-motion: no-preference) {
   @keyframes fadeUp {
-    0% { opacity: 0; transform: translateY(10px); }
-    100% { opacity: 1; transform: translateY(0); }
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   .animate-fadeUp {
@@ -70,33 +94,53 @@
 }
 
 .bg-warm {
-  background: #f5efe7;
+  background: #b2a9c9;
 }
 
 /* Visible warm light layer */
 .bg-warm-layer1 {
   background:
-    radial-gradient(1000px 700px at 15% 10%, rgba(255, 235, 210, 0.6), rgba(255, 235, 210, 0) 65%),
-    radial-gradient(900px 800px at 85% 20%, rgba(255, 225, 200, 0.45), rgba(255, 225, 200, 0) 70%),
-    radial-gradient(1200px 900px at 60% 95%, rgba(255, 240, 220, 0.5), rgba(255, 240, 220, 0) 70%);
+    radial-gradient(
+      1000px 700px at 15% 10%,
+      rgba(255, 235, 210, 0.6),
+      rgba(255, 235, 210, 0) 65%
+    ),
+    radial-gradient(
+      900px 800px at 85% 20%,
+      rgba(255, 225, 200, 0.45),
+      rgba(255, 225, 200, 0) 70%
+    ),
+    radial-gradient(
+      1200px 900px at 60% 95%,
+      rgba(255, 240, 220, 0.5),
+      rgba(255, 240, 220, 0) 70%
+    );
 }
 
 /* Warm depth shadows */
 .bg-warm-layer2 {
   background:
-    radial-gradient(900px 700px at 25% 75%, rgba(120, 90, 60, 0.08), rgba(120, 90, 60, 0) 70%),
-    radial-gradient(1000px 900px at 90% 85%, rgba(90, 60, 40, 0.06), rgba(90, 60, 40, 0) 75%);
+    radial-gradient(
+      900px 700px at 25% 75%,
+      rgba(120, 90, 60, 0.08),
+      rgba(120, 90, 60, 0) 70%
+    ),
+    radial-gradient(
+      1000px 900px at 90% 85%,
+      rgba(90, 60, 40, 0.06),
+      rgba(90, 60, 40, 0) 75%
+    );
   mix-blend-mode: multiply;
 }
 
 .bg-warm::after {
-  content: "";
+  content: '';
   position: absolute;
   inset: 0;
   pointer-events: none;
   background: radial-gradient(
     circle at center,
-    rgba(0,0,0,0) 60%,
-    rgba(0,0,0,0.03) 100%
+    rgba(0, 0, 0, 0) 60%,
+    rgba(0, 0, 0, 0.03) 100%
   );
 }

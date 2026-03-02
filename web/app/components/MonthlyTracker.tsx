@@ -22,11 +22,11 @@ export default async function MonthlyTracker() {
 
   return (
     <section className="mx-auto max-w-5xl px-4 pt-8">
-      <div className="rounded-3xl border border-black/10 bg-white/60 p-5 backdrop-blur sm:p-6">
+      <div className="card-float animate-fadeUp rounded-3xl border border-black/10 bg-white/60 p-5 backdrop-blur sm:p-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:justify-between items-start">
           <div>
             <h2 className="mt-2 font-serif text-2xl tracking-tight sm:text-3xl">
-              Monthly crochet tracker
+              Crochet tracker
             </h2>
             <p className="mt-2 max-w-2xl text-sm leading-6 text-black/55 sm:text-base">
               How many new unique crochet pieces I made each month.
@@ -39,7 +39,7 @@ export default async function MonthlyTracker() {
               {thisMonth.count} new piece{thisMonth.count === 1 ? '' : 's'}
             </div> */}
             <div className="text-xs text-black/45">
-              Last 12 months: {totalAllShown}
+              <span className="font-bold">Last 12 months:</span> {totalAllShown}
             </div>
           </div>
         </div>

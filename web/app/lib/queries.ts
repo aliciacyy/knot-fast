@@ -82,3 +82,135 @@ export async function getRecentWorks(limit = 6): Promise<WorkCard[]> {
   `;
   return sanityClient.fetch(query, { limit }, { next: { revalidate: 60 } });
 }
+
+export async function getProductBySlug(slug: string) {
+  const query = `
+    *[_type=="product" && slug.current == $slug][0]{
+      _id,
+      title,
+      slug,
+      status,
+      description,
+      images,
+      variants[]{
+        name,
+        price,
+        currency,
+        quantity,
+        image
+      },
+      madeToOrder,
+      leadTimeDays,
+      featured
+    }
+  `;
+  return sanityClient.fetch(query, { slug }, { next: { revalidate: 60 } });
+}
+
+export type ProjectCard = {
+  _id: string;
+  title: string;
+  slug: { current: string };
+  publishedAt: string;
+  excerpt?: string;
+  coverImage?: any;
+  tags?: string[];
+  product?: {
+    _id: string;
+    title: string;
+    slug: { current: string };
+    status?: 'draft' | 'active' | 'soldOut' | 'archived';
+  };
+};
+
+export async function getRecentProjects(limit = 6): Promise<ProjectCard[]> {
+  const query = `
+    *[_type=="project" && defined(slug.current)]
+    | order(publishedAt desc, _createdAt desc)[0...$limit]{
+      _id,
+      title,
+      slug,
+      publishedAt,
+      excerpt,
+      coverImage,
+      tags,
+      "product": product->{
+        _id,
+        title,
+        slug,
+        status
+      }
+    }
+  `;
+  return sanityClient.fetch(query, { limit }, { next: { revalidate: 60 } });
+}
+
+export type ProductCard = {
+  _id: string;
+  title: string;
+  slug: { current: string };
+  status?: 'draft' | 'active' | 'soldOut' | 'archived';
+  description?: string;
+  images?: any[];
+  featured?: boolean;
+  variants?: Array<{
+    name: string;
+    price?: number;
+    currency?: string;
+    quantity?: number;
+    image?: any;
+  }>;
+};
+
+export async function getRecentProducts(limit = 6): Promise<ProductCard[]> {
+  const query = `
+    *[_type=="product" && defined(slug.current)]
+    | order(_createdAt desc)[0...$limit]{
+      _id,
+      title,
+      slug,
+      status,
+      description,
+      images,
+      featured,
+      variants[]{
+        name,
+        price,
+        currency,
+        quantity,
+        image
+      }
+    }
+  `;
+  return sanityClient.fetch(query, { limit }, { next: { revalidate: 60 } });
+}
+
+export async function getProjectBySlug(slug: string) {
+  const query = `
+    *[_type=="project" && slug.current == $slug][0]{
+      _id,
+      title,
+      slug,
+      publishedAt,
+      excerpt,
+      coverImage,
+      tags,
+      body,
+      gallery,
+      "product": product->{
+        _id,
+        title,
+        slug,
+        status,
+        images[0],
+        variants[]{
+          name,
+          price,
+          currency,
+          quantity
+        }
+      }
+    }
+  `;
+  return sanityClient.fetch(query, { slug }, { next: { revalidate: 60 } });
+}

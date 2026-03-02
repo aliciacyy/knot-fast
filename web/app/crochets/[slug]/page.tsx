@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import PortableText from '@/app/components/PortableText';
 import { urlForImage } from '@/app/lib/image';
-import { getWorkBySlug, getPostSlugs } from '@/app/lib/queries';
+import { getProjectBySlug, getPostSlugs } from '@/app/lib/queries';
 
 export const revalidate = 60;
 
@@ -27,7 +27,7 @@ export default async function BlogPostPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const post = await getWorkBySlug(slug);
+  const post = await getProjectBySlug(slug);
 
   if (!post) notFound();
 
