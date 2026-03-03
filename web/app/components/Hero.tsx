@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export default function Hero() {
   return (
-    <section className="mx-auto max-w-5xl px-4 pt-14 sm:pt-16">
+    <section className="mx-auto max-w-5xl px-4 pt-2 sm:pt-4">
       <div className="card-float animate-fadeUp rounded-3xl border border-black/10 bg-white/60 p-6 backdrop-blur sm:p-10">
         {/* <div className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white/70 px-3 py-1 text-xs text-black/60">
             <span className="h-1.5 w-1.5 rounded-full bg-black/25" />

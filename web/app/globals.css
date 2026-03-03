@@ -144,3 +144,27 @@
     rgba(0, 0, 0, 0.03) 100%
   );
 }
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes dropdownIn {
+    0% {
+      opacity: 0;
+      transform: translateY(-6px) scaleY(0.92);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scaleY(1);
+    }
+  }
+
+  .animate-dropdownIn {
+    transform-origin: top;
+    animation: dropdownIn 180ms ease-out both;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-dropdownIn {
+    animation: none !important;
+  }
+}

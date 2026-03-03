@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import ParallaxBackground from './components/Background';
 import './globals.css';
 import { Inter, Instrument_Serif } from 'next/font/google';
+import Header from './components/Header';
 
 const sans = Inter({
   subsets: ['latin'],
@@ -27,6 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <Header />
         <ParallaxBackground />
         {children}
       </body>
