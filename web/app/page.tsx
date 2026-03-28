@@ -143,7 +143,7 @@ export default async function HomePage() {
                   </div>
                   {w.variants ? (
                     <p className="mt-2 line-clamp-2 text-sm leading-6 text-black/55">
-                      Prices from {w.variants[0].price}
+                      Prices from ${w.variants[0].price}
                     </p>
                   ) : (
                     <p className="mt-2 line-clamp-2 text-sm leading-6 text-black/55">

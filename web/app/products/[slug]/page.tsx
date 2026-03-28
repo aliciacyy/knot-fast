@@ -92,7 +92,7 @@ export default async function ProductPage({
 
   return (
     <main className="min-h-dvh">
-      <div className="mx-auto max-w-6xl px-4 py-10">
+      <div className="mx-auto max-w-5xl px-4 py-10">
         <Link href="/" className="text-sm text-black/60 hover:text-black/80">
           ← Back to home
         </Link>

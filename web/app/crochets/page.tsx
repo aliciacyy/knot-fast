@@ -14,7 +14,7 @@ export default async function BlogPage({ searchParams }: Props) {
 
   return (
     <main className="min-h-dvh">
-      <div className="mx-auto max-w-6xl px-4 py-12">
+      <div className="mx-auto max-w-5xl px-4 py-12">
         <h1 className="text-3xl font-semibold tracking-tight text-black/90">
           Recent works
         </h1>

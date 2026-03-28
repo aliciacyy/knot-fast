@@ -1,9 +1,9 @@
-import { groq } from "next-sanity";
-import { sanityClient } from "./sanityClient";
+import { groq } from 'next-sanity';
+import { sanityClient } from './sanityClient';
 
 export async function getWorkPublishedDates(): Promise<string[]> {
   const query = groq`
-    *[_type=="work" && defined(publishedAt)]
+    *[_type=="project" && defined(publishedAt)]
     | order(publishedAt asc)
     .publishedAt
   `;
@@ -11,15 +11,31 @@ export async function getWorkPublishedDates(): Promise<string[]> {
 }
 
 export type MonthCount = {
-  key: string;      // "YYYY-MM"
-  label: string;    // "Mar"
+  key: string; // "YYYY-MM"
+  label: string; // "Mar"
   year: number;
-  month: number;    // 1-12
+  month: number; // 1-12
   count: number;
 };
 
-export function buildCurrentPlusNonEmptyPastMonths(dates: string[], now = new Date()): MonthCount[] {
-  const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+export function buildCurrentPlusNonEmptyPastMonths(
+  dates: string[],
+  now = new Date(),
+): MonthCount[] {
+  const monthNames = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
 
   const counts = new Map<string, number>();
 
@@ -60,7 +76,7 @@ export function buildCurrentPlusNonEmptyPastMonths(dates: string[], now = new Da
 
   // Add non-empty past months
   for (const key of pastKeysLimited) {
-    const [y, m] = key.split("-").map(Number);
+    const [y, m] = key.split('-').map(Number);
     result.push({
       key,
       label: monthNames[(m ?? 1) - 1],
