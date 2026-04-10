@@ -33,6 +33,7 @@ export const project = defineType({
           name: 'alt',
           title: 'Alt text',
           type: 'string',
+          initialValue: (doc) => doc?.title || '',
           validation: (Rule) => Rule.required(),
         }),
       ],
@@ -43,6 +44,12 @@ export const project = defineType({
       type: 'text',
       rows: 3,
       description: 'Short summary used in cards / SEO.',
+    }),
+    defineField({
+      name: 'patternLink',
+      title: 'Pattern Link',
+      type: 'string',
+      description: 'Pattern link',
     }),
     defineField({
       name: 'body',
