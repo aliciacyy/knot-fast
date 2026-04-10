@@ -1,27 +1,14 @@
-import Image from 'next/image';
 import Link from 'next/link';
-import { getRecentProducts, getRecentProjects } from './lib/queries';
-import { urlForImage } from './lib/image';
+import { getRecentProjects } from './lib/queries';
 import MonthlyTracker from './components/MonthlyTracker';
 import Footer from './components/Footer';
 import Hero from './components/Hero';
+import CrochetTimeline from './components/CrochetTimeline';
 
 export const revalidate = 60;
 
-function formatDate(iso: string) {
-  const d = new Date(iso);
-  return d.toLocaleDateString('en-SG', {
-    year: 'numeric',
-    month: 'short',
-    day: '2-digit',
-  });
-}
-
 export default async function HomePage() {
-  const [products, projects] = await Promise.all([
-    getRecentProducts(),
-    getRecentProjects(6),
-  ]);
+  const projects = await getRecentProjects(6);
 
   return (
     <main className="min-h-dvh text-black/90">
@@ -96,7 +83,7 @@ export default async function HomePage() {
       </section> */}
 
       {/* UP FOR ORDERS */}
-      <section className="mx-auto max-w-5xl px-4 pt-8">
+      {/* <section className="mx-auto max-w-5xl px-4 pt-8">
         <div className="card-float animate-fadeUp rounded-3xl border border-black/10 bg-white/60 p-5 backdrop-blur sm:p-6">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
             <div className="min-w-0">
@@ -155,14 +142,14 @@ export default async function HomePage() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* RECENT */}
       <section className="mx-auto max-w-5xl px-4 py-8">
         <div className="card-float animate-fadeUp rounded-3xl border border-black/10 bg-white/60 p-5 backdrop-blur sm:p-6">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
             <div className="min-w-0">
-              <h3 className="font-serif text-3xl tracking-tight">Blog</h3>
+              <h3 className="font-serif text-3xl tracking-tight">Crochets</h3>
               <p className="mt-2 text-sm text-black/55 sm:text-base">
                 Documenting my crochet journey, one stitch at a time.
               </p>
@@ -176,44 +163,8 @@ export default async function HomePage() {
             </Link>
           </div>
 
-          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {projects.map((w) => (
-              <Link
-                key={w._id}
-                href={`/crochets/${w.slug.current}`}
-                className="card-float group overflow-hidden rounded-3xl border border-black/10 bg-white/55 shadow-sm backdrop-blur hover:bg-white/70 hover:shadow-md"
-              >
-                <div className="relative aspect-[4/3] bg-black/5">
-                  {w.coverImage ? (
-                    <Image
-                      src={urlForImage(w.coverImage)
-                        .width(1200)
-                        .height(900)
-                        .quality(80)
-                        .url()}
-                      alt={w.title}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    />
-                  ) : null}
-                </div>
-
-                <div className="p-4">
-                  <div className="text-xs text-black/45">
-                    {formatDate(w.publishedAt)}
-                  </div>
-                  <div className="mt-1 font-medium text-black/85">
-                    {w.title}
-                  </div>
-                  {w.excerpt ? (
-                    <p className="mt-2 line-clamp-2 text-sm leading-6 text-black/55">
-                      {w.excerpt}
-                    </p>
-                  ) : null}
-                </div>
-              </Link>
-            ))}
+          <div className="mt-8">
+            <CrochetTimeline posts={projects} />
           </div>
         </div>
       </section>

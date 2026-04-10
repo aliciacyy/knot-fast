@@ -1,43 +1,38 @@
-import Link from 'next/link';
-
 export default function Hero() {
   return (
     <section className="mx-auto max-w-5xl px-4 pt-2 sm:pt-4">
-      <div className="card-float animate-fadeUp rounded-3xl border border-black/10 bg-white/60 p-6 backdrop-blur sm:p-10">
-        {/* <div className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white/70 px-3 py-1 text-xs text-black/60">
-            <span className="h-1.5 w-1.5 rounded-full bg-black/25" />
-            crochet journal
-          </div> */}
+      <div className="animate-fadeUp relative overflow-hidden rounded-[2.25rem] border border-white/50 bg-[#f9eadf]/45 px-6 py-16 shadow-[0_28px_90px_rgba(92,60,38,0.12)] backdrop-blur sm:px-10 sm:py-24 lg:px-14">
+        <div className="relative z-10">
+          <div className="max-w-4xl">
+            <h1 className="font-serif text-[3.85rem] leading-[0.82] tracking-[-0.08em] text-black/90 sm:text-[4.4rem] lg:text-[6.4rem]">
+              <span className="hero-title-line">Knot Fast</span>
+            </h1>
 
-        <h1 className="mt-5 font-serif text-4xl tracking-tight sm:text-5xl">
-          Knot Fast
-        </h1>
+            <div
+              className="hero-thread relative mt-6 h-12 w-full text-[#8f5d3e]/30"
+              aria-hidden="true"
+            >
+              <div className="hero-thread-reveal absolute inset-0 origin-left overflow-hidden">
+                <svg
+                  className="h-full w-full"
+                  viewBox="0 0 960 64"
+                  fill="none"
+                  preserveAspectRatio="none"
+                >
+                  <path
+                    d="M8 35C95 12 151 58 226 34C295 12 355 51 420 34C495 15 548 49 612 35C690 18 749 14 819 33C871 47 912 47 952 32"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </div>
+            </div>
 
-        <p className="mt-4 max-w-2xl text-base leading-7 text-black/60 sm:text-lg">
-          A small, cozy archive of my crochet works.
-        </p>
-
-        <div className="mt-7 flex flex-wrap gap-3">
-          <Link
-            href="/crochets"
-            className="rounded-full bg-black px-5 py-2.5 text-sm font-medium text-white hover:bg-black/90"
-          >
-            Shop
-          </Link>
-
-          <Link
-            href="/studio"
-            className="rounded-full bg-gray-200 border border-black/15 px-5 py-2.5 text-sm font-medium text-black/75 hover:bg-white"
-          >
-            Blog
-          </Link>
-
-          <Link
-            href="/studio"
-            className="rounded-full border border-black/15 bg-white/70 px-5 py-2.5 text-sm font-medium text-black/75 hover:bg-white"
-          >
-            About
-          </Link>
+            <p className="hero-copy mt-4 max-w-xl text-lg leading-8 text-black/62 sm:text-xl">
+              A small, cozy archive of my crochet works.
+            </p>
+          </div>
         </div>
       </div>
     </section>

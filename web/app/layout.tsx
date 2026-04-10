@@ -3,6 +3,7 @@ import ParallaxBackground from './components/Background';
 import './globals.css';
 import { Inter, Instrument_Serif } from 'next/font/google';
 import Header from './components/Header';
+import ScrollToTopOnRouteChange from './components/ScrollToTopOnRouteChange';
 
 const sans = Inter({
   subsets: ['latin'],
@@ -28,6 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <ScrollToTopOnRouteChange />
         <Header />
         <ParallaxBackground />
         {children}

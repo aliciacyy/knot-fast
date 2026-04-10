@@ -24,7 +24,7 @@ function formatDate(iso: string) {
 }
 
 export default function PostCard({ post }: PostCardProps) {
-  const href = `/blog/${post.slug.current}`;
+  const href = `/crochets/${post.slug.current}`;
 
   return (
     <article className="group rounded-2xl border border-black/5 bg-white/60 p-4 shadow-sm backdrop-blur transition hover:shadow-md">

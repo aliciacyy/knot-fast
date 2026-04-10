@@ -25,11 +25,8 @@ export default function Header() {
 
           {/* DESKTOP NAV */}
           <nav className="hidden items-center gap-6 text-sm font-medium text-black/70 md:flex">
-            <Link href="/blog" className="hover:text-black/90 transition">
-              Blog
-            </Link>
             <Link href="/crochets" className="hover:text-black/90 transition">
-              Shop
+              Crochets
             </Link>
           </nav>
 
@@ -53,18 +50,11 @@ export default function Header() {
             <div className="animate-dropdownIn mt-3 rounded-2xl border border-black/10 bg-white/70 p-4 shadow-sm backdrop-blur">
               <nav className="flex flex-col gap-3 text-sm font-medium text-black/70">
                 <Link
-                  href="/blog"
-                  onClick={() => setOpen(false)}
-                  className="hover:text-black/90 transition"
-                >
-                  Blog
-                </Link>
-                <Link
                   href="/crochets"
                   onClick={() => setOpen(false)}
                   className="hover:text-black/90 transition"
                 >
-                  Shop
+                  Crochets
                 </Link>
               </nav>
             </div>

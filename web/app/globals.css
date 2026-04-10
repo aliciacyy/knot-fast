@@ -168,3 +168,255 @@
     animation: none !important;
   }
 }
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes heroTextIn {
+    0% {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes heroThreadReveal {
+    0% {
+      transform: scaleX(0);
+    }
+    100% {
+      transform: scaleX(1);
+    }
+  }
+
+  .hero-title-line {
+    display: inline-block;
+    animation: heroTextIn 700ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    will-change: transform, opacity;
+  }
+
+  .hero-title-line-delay {
+    animation-delay: 20ms;
+  }
+
+  .hero-thread {
+    opacity: 1;
+  }
+
+  .hero-thread-reveal {
+    transform: scaleX(0);
+    animation: heroThreadReveal 2600ms cubic-bezier(0.65, 0, 0.35, 1) both;
+    will-change: transform;
+  }
+
+  .hero-copy {
+    animation: heroTextIn 650ms ease-out 430ms both;
+    will-change: transform, opacity;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-title-line,
+  .hero-thread,
+  .hero-copy {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .hero-thread-reveal {
+    animation: none !important;
+    transform: scaleX(1) !important;
+  }
+}
+
+.crochet-main-timeline {
+  position: relative;
+  padding: 0.5rem 0;
+}
+
+.crochet-main-timeline::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 4px;
+  margin-left: -2px;
+  border-radius: 999px;
+  background: linear-gradient(
+    180deg,
+    rgba(191, 123, 81, 0.22),
+    rgba(191, 123, 81, 0.62),
+    rgba(191, 123, 81, 0.22)
+  );
+}
+
+.crochet-timeline-month {
+  position: relative;
+  z-index: 1;
+}
+
+.crochet-timeline-month + .crochet-timeline-month {
+  margin-top: 1.25rem;
+}
+
+.crochet-timeline-month-label {
+  position: relative;
+  z-index: 3;
+  width: fit-content;
+  margin: 0 auto 1.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 999px;
+  background: rgba(255, 248, 241, 0.96);
+  padding: 0.6rem 1.2rem;
+  font-family: var(--font-serif), ui-serif, Georgia, serif;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.82);
+  box-shadow: 0 12px 34px rgba(96, 62, 34, 0.1);
+  backdrop-filter: blur(12px);
+}
+
+.crochet-timeline-item {
+  position: relative;
+  width: 50%;
+  padding-bottom: 2.75rem;
+}
+
+.crochet-timeline-item.left {
+  left: 0;
+  padding-right: 10.5rem;
+}
+
+.crochet-timeline-item.right {
+  left: 50%;
+  padding-left: 10.5rem;
+}
+
+.crochet-timeline-item::after {
+  content: '';
+  position: absolute;
+  top: 2rem;
+  z-index: 2;
+  width: 1.35rem;
+  height: 1.35rem;
+  border: 5px solid #fff7ef;
+  border-radius: 999px;
+  background: #bf7b51;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.08),
+    0 12px 28px rgba(191, 123, 81, 0.24);
+}
+
+.crochet-timeline-item.left::after {
+  right: -0.675rem;
+}
+
+.crochet-timeline-item.right::after {
+  left: -0.675rem;
+}
+
+.crochet-timeline-item::before {
+  content: '';
+  position: absolute;
+  top: 2.65rem;
+  z-index: 1;
+  width: 9.75rem;
+  height: 2px;
+  background: rgba(0, 0, 0, 0.16);
+}
+
+.crochet-timeline-item.left::before {
+  right: 0.7rem;
+}
+
+.crochet-timeline-item.right::before {
+  left: 0.7rem;
+}
+
+.crochet-timeline-date {
+  position: absolute;
+  top: 1.45rem;
+  z-index: 3;
+  display: inline-flex;
+  min-width: 4.25rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 999px;
+  background: rgba(246, 233, 223, 0.96);
+  padding: 0.5rem 0.7rem;
+  text-align: center;
+  box-shadow: 0 8px 30px rgba(96, 62, 34, 0.08);
+  backdrop-filter: blur(12px);
+}
+
+.crochet-timeline-date strong {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.72);
+}
+
+.crochet-timeline-item.left .crochet-timeline-date {
+  right: 3.15rem;
+}
+
+.crochet-timeline-item.right .crochet-timeline-date {
+  left: 3.15rem;
+}
+
+.crochet-timeline-card-wrap {
+  position: relative;
+}
+
+@media (max-width: 767px) {
+  .crochet-main-timeline::after {
+    left: 1.5rem;
+  }
+
+  .crochet-timeline-month + .crochet-timeline-month {
+    margin-top: 0.5rem;
+  }
+
+  .crochet-timeline-month-label {
+    margin: 0 0 1.25rem;
+    font-size: 1.35rem;
+  }
+
+  .crochet-timeline-item,
+  .crochet-timeline-item.left,
+  .crochet-timeline-item.right {
+    left: 0;
+    width: 100%;
+    padding-right: 0;
+    padding-left: 5rem;
+  }
+
+  .crochet-timeline-item.left::after,
+  .crochet-timeline-item.right::after {
+    left: 0.82rem;
+    right: auto;
+  }
+
+  .crochet-timeline-item.left::before,
+  .crochet-timeline-item.right::before {
+    left: 2.15rem;
+    right: auto;
+    width: 2.6rem;
+  }
+
+  .crochet-timeline-item.left .crochet-timeline-date,
+  .crochet-timeline-item.right .crochet-timeline-date {
+    top: 1.48rem;
+    left: 2.8rem;
+    right: auto;
+    min-width: 3.85rem;
+    padding: 0.45rem 0.55rem;
+  }
+
+  .crochet-timeline-card-wrap {
+    padding-top: 0;
+  }
+}

@@ -1,59 +1,27 @@
-import PostCard from '../components/PostCard';
-import { getWorks, getAllWorkTags } from '../lib/queries';
+import CrochetProjectGrid from '../components/CrochetProjectGrid';
+import { getRecentProjects } from '../lib/queries';
 
 export const revalidate = 60;
 
-type Props = {
-  searchParams: Promise<{ tag?: string }>;
-};
-
-export default async function BlogPage({ searchParams }: Props) {
-  const { tag } = await searchParams; // 👈 FIX HERE
-
-  const [posts, tags] = await Promise.all([getWorks(), getAllWorkTags()]);
+export default async function CrochetsPage() {
+  const posts = await getRecentProjects(20);
 
   return (
     <main className="min-h-dvh">
-      <div className="mx-auto max-w-5xl px-4 py-12">
-        <h1 className="text-3xl font-semibold tracking-tight text-black/90">
-          Recent works
-        </h1>
+      <section className="mx-auto max-w-5xl px-4 py-8 sm:py-10">
+        <div className="card-float animate-fadeUp rounded-3xl border border-black/10 bg-white/60 p-5 backdrop-blur sm:p-6">
+          <div className="min-w-0">
+            <h1 className="font-serif text-4xl tracking-tight text-black/90 sm:text-5xl">
+              Crochets
+            </h1>
+            <p className="mt-2 text-sm text-black/55 sm:text-base">
+              Documenting my crochet journey, one stitch at a time.
+            </p>
+          </div>
 
-        {/* Tag filter */}
-        <div className="mt-6 flex flex-wrap gap-2">
-          <a
-            href="/blog"
-            className={
-              !tag
-                ? 'bg-black text-white px-3 py-1 rounded-full'
-                : 'border px-3 py-1 rounded-full'
-            }
-          >
-            All
-          </a>
-
-          {tags.map((t) => (
-            <a
-              key={t}
-              href={`/blog?tag=${encodeURIComponent(t)}`}
-              className={
-                t === tag
-                  ? 'bg-black text-white px-3 py-1 rounded-full'
-                  : 'border px-3 py-1 rounded-full'
-              }
-            >
-              {t}
-            </a>
-          ))}
+          <CrochetProjectGrid posts={posts} />
         </div>
-
-        {/* Posts */}
-        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {posts.map((p: any) => (
-            <PostCard key={p._id} post={p} />
-          ))}
-        </div>
-      </div>
+      </section>
     </main>
   );
 }
