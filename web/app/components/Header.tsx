@@ -28,6 +28,9 @@ export default function Header() {
             <Link href="/crochets" className="hover:text-black/90 transition">
               Crochets
             </Link>
+            <Link href="/runs" className="hover:text-black/90 transition">
+              Runs
+            </Link>
           </nav>
 
           {/* MOBILE MENU BUTTON */}
@@ -55,6 +58,13 @@ export default function Header() {
                   className="hover:text-black/90 transition"
                 >
                   Crochets
+                </Link>
+                <Link
+                  href="/runs"
+                  onClick={() => setOpen(false)}
+                  className="hover:text-black/90 transition"
+                >
+                  Runs
                 </Link>
               </nav>
             </div>

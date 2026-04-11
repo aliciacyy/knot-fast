@@ -1,21 +1,27 @@
-import Link from 'next/link';
 import { getRecentProjects } from './lib/queries';
-import MonthlyTracker from './components/MonthlyTracker';
 import Footer from './components/Footer';
 import Hero from './components/Hero';
-import CrochetTimeline from './components/CrochetTimeline';
+import HomeCrochetSection from './components/HomeCrochetSection';
+import HomeRunsSection from './components/HomeRunsSection';
+import { getRecentRuns } from './lib/runs';
+import { buildRecentMonths, getRunDates } from './lib/stats';
 
 export const revalidate = 60;
+export const dynamic = 'force-dynamic';
 
 export default async function HomePage() {
-  const projects = await getRecentProjects(6);
+  const projects = await getRecentProjects(10);
+  const [runs, runDates] = await Promise.all([getRecentRuns(6), getRunDates()]);
+  const runMonths = buildRecentMonths(runDates, 12);
 
   return (
     <main className="min-h-dvh text-black/90">
       {/* HERO */}
       <Hero />
 
-      <MonthlyTracker />
+      <HomeCrochetSection posts={projects} />
+
+      <HomeRunsSection runs={runs} months={runMonths} />
 
       {/* FEATURED */}
       {/* <section className="animate-fadeUp mx-auto max-w-5xl px-4 pt-8">
@@ -143,31 +149,6 @@ export default async function HomePage() {
           </div>
         </div>
       </section> */}
-
-      {/* RECENT */}
-      <section className="mx-auto max-w-5xl px-4 py-8">
-        <div className="card-float animate-fadeUp rounded-3xl border border-black/10 bg-white/60 p-5 backdrop-blur sm:p-6">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
-            <div className="min-w-0">
-              <h3 className="font-serif text-3xl tracking-tight">Crochets</h3>
-              <p className="mt-2 text-sm text-black/55 sm:text-base">
-                Documenting my crochet journey, one stitch at a time.
-              </p>
-            </div>
-
-            <Link
-              href="/crochets"
-              className="inline-flex w-fit items-center gap-1 rounded-full border border-black/10 bg-white/60 px-3 py-1.5 text-sm font-medium text-black/70 backdrop-blur hover:bg-white/80"
-            >
-              View all <span aria-hidden="true">→</span>
-            </Link>
-          </div>
-
-          <div className="mt-8">
-            <CrochetTimeline posts={projects} />
-          </div>
-        </div>
-      </section>
 
       {/* FOOTER */}
       <Footer />

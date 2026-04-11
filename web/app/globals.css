@@ -371,6 +371,20 @@
   position: relative;
 }
 
+@media (min-width: 768px) {
+  .crochet-timeline-month > .crochet-timeline-item:not(:first-of-type) {
+    margin-top: -7.5rem;
+  }
+
+  .crochet-timeline-month > .crochet-timeline-item:first-of-type {
+    margin-top: 0;
+  }
+
+  .crochet-timeline-item.right {
+    margin-top: -7.5rem;
+  }
+}
+
 @media (max-width: 767px) {
   .crochet-main-timeline::after {
     left: 1.5rem;
@@ -390,6 +404,7 @@
   .crochet-timeline-item.right {
     left: 0;
     width: 100%;
+    margin-top: 0;
     padding-right: 0;
     padding-left: 5rem;
   }

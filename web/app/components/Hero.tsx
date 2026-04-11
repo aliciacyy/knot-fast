@@ -30,7 +30,8 @@ export default function Hero() {
             </div>
 
             <p className="hero-copy mt-4 max-w-xl text-lg leading-8 text-black/62 sm:text-xl">
-              A small, cozy archive of my crochet works.
+              A small, cozy archive of my weird hobby combination of crochet
+              works and running.
             </p>
           </div>
         </div>

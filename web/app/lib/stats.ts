@@ -10,6 +10,15 @@ export async function getWorkPublishedDates(): Promise<string[]> {
   return sanityClient.fetch(query, {}, { next: { revalidate: 300 } });
 }
 
+export async function getRunDates(): Promise<string[]> {
+  const query = groq`
+    *[_type=="run" && defined(startDateLocal)]
+    | order(startDateLocal asc)
+    .startDateLocal
+  `;
+  return sanityClient.fetch(query, {}, { next: { revalidate: 300 } });
+}
+
 export type MonthCount = {
   key: string; // "YYYY-MM"
   label: string; // "Mar"
@@ -87,4 +96,53 @@ export function buildCurrentPlusNonEmptyPastMonths(
   }
 
   return result;
+}
+
+export function buildRecentMonths(
+  dates: string[],
+  monthsToShow = 12,
+  now = new Date(),
+): MonthCount[] {
+  const monthNames = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
+
+  const counts = new Map<string, number>();
+
+  for (const iso of dates) {
+    const d = new Date(iso);
+    if (Number.isNaN(d.getTime())) continue;
+
+    const year = d.getFullYear();
+    const month = d.getMonth() + 1;
+    const key = `${year}-${month < 10 ? `0${month}` : month}`;
+
+    counts.set(key, (counts.get(key) ?? 0) + 1);
+  }
+
+  return Array.from({ length: monthsToShow }, (_, index) => {
+    const date = new Date(now.getFullYear(), now.getMonth() - index, 1);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const key = `${year}-${month < 10 ? `0${month}` : month}`;
+
+    return {
+      key,
+      label: monthNames[date.getMonth()],
+      year,
+      month,
+      count: counts.get(key) ?? 0,
+    };
+  });
 }

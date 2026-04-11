@@ -1,0 +1,11 @@
+{
+  "totalRuns": 100,
+  "totalDistanceMeters": 551751.1,
+  "totalTimeSeconds": 241030,
+  "averagePaceSecondsPerKm": 436.85,
+  "formatted": {
+    "totalDistanceKilometers": "551.75 km",
+    "totalTime": "66:57:10",
+    "averagePace": "7:17/km"
+  }
+}
