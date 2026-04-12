@@ -77,6 +77,19 @@ export default async function BlogPostPage({
                 </p>
               ) : null}
 
+              {post.patternLink ? (
+                <div className="flex flex-wrap gap-3">
+                  <a
+                    href={post.patternLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1 rounded-full border border-black/10 bg-white/70 px-4 py-2 text-sm font-medium text-black/72 backdrop-blur transition hover:bg-white"
+                  >
+                    View pattern <span aria-hidden="true">↗</span>
+                  </a>
+                </div>
+              ) : null}
+
               {post.tags?.length ? (
                 <div className="flex flex-wrap gap-2 pt-1">
                   {post.tags.map((t: string) => (

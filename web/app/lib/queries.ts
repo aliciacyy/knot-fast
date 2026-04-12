@@ -195,6 +195,7 @@ export async function getProjectBySlug(slug: string) {
       excerpt,
       coverImage,
       tags,
+      patternLink,
       body,
       gallery,
       "product": product->{
