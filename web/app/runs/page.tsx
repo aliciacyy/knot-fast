@@ -1,13 +1,13 @@
 import Footer from '../components/Footer';
 import RunsGrid from '../components/RunsGrid';
-import runStats from '../data/garmin-run-stats.json';
 import { getRuns } from '../lib/runs';
+import { getRunStats } from '../lib/stats';
 
 export const revalidate = 60;
 export const dynamic = 'force-dynamic';
 
 export default async function RunsPage() {
-  const runs = await getRuns();
+  const [runs, runStats] = await Promise.all([getRuns(), getRunStats()]);
 
   return (
     <main className="min-h-dvh text-black/90">

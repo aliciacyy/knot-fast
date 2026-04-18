@@ -32,7 +32,7 @@ export default async function HomeCrochetSection({
             href="/crochets"
             className="inline-flex w-fit items-center gap-1 rounded-full border border-black/10 bg-white/60 px-3 py-1.5 text-sm font-medium text-black/70 backdrop-blur hover:bg-white/80"
           >
-            View all crochets <span aria-hidden="true">→</span>
+            View all <span aria-hidden="true">→</span>
           </Link>
         </div>
 

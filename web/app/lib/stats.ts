@@ -1,6 +1,86 @@
 import { groq } from 'next-sanity';
 import { sanityClient } from './sanityClient';
 
+type RunStatSource = {
+  distanceMeters?: number | null;
+  movingTimeSeconds?: number | null;
+};
+
+export type RunStats = {
+  totalRuns: number;
+  totalDistanceMeters: number;
+  totalTimeSeconds: number;
+  averagePaceSecondsPerKm: number;
+  formatted: {
+    totalDistanceKilometers: string;
+    totalTime: string;
+    averagePace: string;
+  };
+};
+
+function formatDuration(seconds: number) {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const remainder = seconds % 60;
+
+  return [hours, minutes, remainder]
+    .map((value) => String(value).padStart(2, '0'))
+    .join(':');
+}
+
+function formatPace(secondsPerKm: number) {
+  if (!Number.isFinite(secondsPerKm) || secondsPerKm <= 0) {
+    return '0:00/km';
+  }
+
+  const minutes = Math.floor(secondsPerKm / 60);
+  const seconds = Math.round(secondsPerKm % 60);
+
+  if (seconds === 60) {
+    return `${minutes + 1}:00/km`;
+  }
+
+  return `${minutes}:${String(seconds).padStart(2, '0')}/km`;
+}
+
+export async function getRunStats(): Promise<RunStats> {
+  const query = groq`
+    *[_type=="run"]{
+      distanceMeters,
+      movingTimeSeconds
+    }
+  `;
+  const runs = await sanityClient.fetch<RunStatSource[]>(
+    query,
+    {},
+    { next: { revalidate: 60 } },
+  );
+
+  const totalRuns = runs.length;
+  const totalDistanceMeters = runs.reduce(
+    (sum, run) => sum + (run.distanceMeters ?? 0),
+    0,
+  );
+  const totalTimeSeconds = runs.reduce(
+    (sum, run) => sum + (run.movingTimeSeconds ?? 0),
+    0,
+  );
+  const averagePaceSecondsPerKm =
+    totalDistanceMeters > 0 ? totalTimeSeconds / (totalDistanceMeters / 1000) : 0;
+
+  return {
+    totalRuns,
+    totalDistanceMeters: Number(totalDistanceMeters.toFixed(1)),
+    totalTimeSeconds,
+    averagePaceSecondsPerKm: Number(averagePaceSecondsPerKm.toFixed(2)),
+    formatted: {
+      totalDistanceKilometers: `${(totalDistanceMeters / 1000).toFixed(2)} km`,
+      totalTime: formatDuration(totalTimeSeconds),
+      averagePace: formatPace(averagePaceSecondsPerKm),
+    },
+  };
+}
+
 export async function getWorkPublishedDates(): Promise<string[]> {
   const query = groq`
     *[_type=="project" && defined(publishedAt)]

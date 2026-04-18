@@ -63,21 +63,21 @@ const RUN_FIELDS = `
 
 export async function getRuns(): Promise<GarminRun[]> {
   const query = `*[_type == "run"] | order(startDateLocal desc) {${RUN_FIELDS}}`;
-  return sanityClient.fetch(query, {}, { next: { revalidate: 1 } });
+  return sanityClient.fetch(query, {}, { next: { revalidate: 60 } });
 }
 
 export async function getRecentRuns(limit = 3): Promise<GarminRun[]> {
   const safeLimit = Number.isFinite(limit) ? Math.max(0, Math.floor(limit)) : 3;
   const query = `*[_type == "run"] | order(startDateLocal desc)[0...${safeLimit}] {${RUN_FIELDS}}`;
-  return sanityClient.fetch(query, {}, { next: { revalidate: 1 } });
+  return sanityClient.fetch(query, {}, { next: { revalidate: 60 } });
 }
 
 export async function getRunById(id: number): Promise<GarminRun | null> {
   const query = `*[_type == "run" && activityId == $id][0] {${RUN_FIELDS}}`;
-  return sanityClient.fetch(query, { id }, { next: { revalidate: 1 } });
+  return sanityClient.fetch(query, { id }, { next: { revalidate: 60 } });
 }
 
 export async function getRunIds(): Promise<number[]> {
   const query = `*[_type == "run" && defined(activityId)] | order(startDateLocal desc).activityId`;
-  return sanityClient.fetch(query, {}, { next: { revalidate: 1 } });
+  return sanityClient.fetch(query, {}, { next: { revalidate: 60 } });
 }
