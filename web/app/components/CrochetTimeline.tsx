@@ -46,13 +46,7 @@ function groupPostsByMonth(posts: ProjectCard[]) {
   }, []);
 }
 
-function TimelineCard({
-  post,
-  index,
-}: {
-  post: ProjectCard;
-  index: number;
-}) {
+function TimelineCard({ post, index }: { post: ProjectCard; index: number }) {
   const isRight = index % 2 === 1;
 
   return (
@@ -112,11 +106,11 @@ function TimelineCard({
               </div>
             ) : null}
 
-            <div className="mt-5 border-t border-black/8 pt-4 text-right">
+            {/* <div className="mt-5 border-t border-black/8 pt-4 text-right">
               <span className="inline-flex text-sm font-medium text-black/70 transition group-hover:translate-x-1">
                 Read story →
               </span>
-            </div>
+            </div> */}
           </div>
         </Link>
       </div>
