@@ -20,8 +20,7 @@ export default async function HomeRunsSection({
               Running tracker
             </h3>
             <p className="mt-2 text-sm leading-6 text-black/55 sm:text-base">
-              Hopefully I can either run 10k or improve my 5K pace to below 6
-              minutes.
+              Running will be paused for the rest of 2026 due to pregnancy.
             </p>
           </div>
 
